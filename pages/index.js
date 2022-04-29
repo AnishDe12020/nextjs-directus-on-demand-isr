@@ -15,8 +15,14 @@ export default function Home({ posts }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to A demo of Next.js with Directus
+          Welcome to A demo of Next.js with Directus.
         </h1>
+        <h2 className={styles.description}>
+          Read the blog post{" "}
+          <a href="https://blog.anishde.dev/making-a-blog-with-directus-mdx-and-nextjs-on-demand-isr">
+            Here
+          </a>
+        </h2>
 
         <div className={styles.grid}>
           {posts.map((post) => (
