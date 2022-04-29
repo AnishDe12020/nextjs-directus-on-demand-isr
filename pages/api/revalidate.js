@@ -1,6 +1,6 @@
 import directus from "../../lib/directus";
 
-const handler = (req, res) => {
+const handler = async (req, res) => {
   const { collection } = req.body;
   const headers = req.headers;
 
@@ -19,14 +19,14 @@ const handler = (req, res) => {
   if (collection === "blog") {
     const { keys } = req.body;
 
-    keys.forEach(async (key) => {
+    for (const key of keys) {
       const directusRes = await directus
         .items(collection)
         .readOne(key, { fields: ["slug"] });
 
       await res.unstable_revalidate(`/${directusRes.slug}`);
       await res.unstable_revalidate("/");
-    });
+    }
   }
 
   return res.status(200).send("Success");
