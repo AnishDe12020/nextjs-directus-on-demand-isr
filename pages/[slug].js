@@ -1,13 +1,14 @@
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemote } from "next-mdx-remote";
+
 import directus from "../lib/directus";
 import styles from "../styles/BlogPost.module.css";
 
 const BlogPage = ({ post }) => {
-  console.log(post);
-
   return (
     <div className={styles.container}>
       <h1>{post.title}</h1>
-      <p>{post.content}</p>
+      <MDXRemote {...post.content} />
     </div>
   );
 };
@@ -20,7 +21,10 @@ export const getStaticProps = async ({ params }) => {
 
   return {
     props: {
-      post: res.data[0],
+      post: {
+        title: res.data[0].title,
+        content: await serialize(res.data[0].content),
+      },
     },
   };
 };
